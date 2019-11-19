@@ -1,0 +1,55 @@
+/* HEADER */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color:rgb(88, 153, 233);
+    z-index: 999;
+}
+
+.header img {
+    max-width: 150px;
+}
+
+.header .nav-item a {
+    font-size: 26px;
+    line-height: 24px;
+    font-weight: 600;
+    padding: 11px 16px;
+    color: #fff;
+    text-transform: uppercase;
+    position: relative;
+    border-radius: 5px;
+    margin: 14px 0;
+}
+
+.header .navbar-toggler {
+    outline: none;
+}
+
+.header .navbar-toggler .toggler-icon {
+    width: 30px;
+    height: 2px;
+    background-color: #121212;
+    margin: 5px 0;
+    display: block;
+    position: relative;
+}
+
+.header .navbar-collapse .nav-item {
+    padding: 12px 0;
+}
+
+.header-spacer {
+    height: 76px;
+}
+
+.logo {
+    height: 80px;
+    width: 80px;
+}
+.cart-logo {
+    height: 30px;
+    width: 30px;
+}
