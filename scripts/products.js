@@ -3,7 +3,7 @@ var shopProducts = [];
 shopProducts.push(new ProductItems(
     'White rock',
     'lorem ipsum patatim',
-    ['./assets/whiterock.jpg'],
+    ['assets/whiterock.jpg'],
     [1, 2, 3],
     [1, 2, 3],
     [
@@ -41,7 +41,7 @@ shopProducts.push(new ProductItems(
 shopProducts.push(new ProductItems(
     'Black rock',
     'lorem ipsum patatim',
-    ['./assets/blackrock.jpg'],
+    ['./assets/darkrock.jpg'],
     [1, 2, 3],
     [1, 2, 3],
     [
