@@ -17,7 +17,7 @@ shopProducts.push(new ProductItems(
             size: "small"
         }
     ],
-    1
+    '1'
 ));
 shopProducts.push(new ProductItems(
     'Gray rock',
@@ -36,7 +36,7 @@ shopProducts.push(new ProductItems(
             size: "small"
         }
     ],
-    2
+    '2'
 ));
 shopProducts.push(new ProductItems(
     'Black rock',
@@ -55,5 +55,5 @@ shopProducts.push(new ProductItems(
             size: "small"
         }
     ],
-    3
+    '3'
 ));
