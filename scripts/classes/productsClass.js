@@ -168,6 +168,16 @@ function Products() {
             productAddToCartEl.innerHTML = 'Add to cart';
             productAddToCartEl.onclick = function () {
                 cart.addProduct(product);
+                // Set the new stock available
+                // TODO: get the available stock from localStorage
+                var availableStock = selectedProp.stock - productSelectQuantityEl.value;
+                productSelectQuantityEl.options.length = 0;
+                for (var i = 0; i < availableStock; i++) {
+                    var option = document.createElement('option');
+                    option.value = i + 1;
+                    option.text = i + 1;
+                    productSelectQuantityEl.appendChild(option);
+                }
             };
 
             productEl.appendChild(productImageEl);
