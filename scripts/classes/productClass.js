@@ -1,6 +1,6 @@
 /**
  * @class Product
- * Description: This class creates a product item and renders it.
+ * Description: This class creates a product item.
  * @param {String} name The product´s name
  * @param {String} details The product´s details
  * @param {String} img The product´s img
@@ -13,8 +13,4 @@ function Product(name, details, img, properties, id) {
     this.img = img;
     this.properties = properties;
     this.id = id;
-
-    this.render = function () {
-        // render product
-    }
 }

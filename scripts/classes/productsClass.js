@@ -37,6 +37,70 @@ function Products() {
             ],
             '1'
         ),
+        new Product(
+            'Gray rock',
+            'lorem ipsum patatim',
+            ['assets/grayrock.jpg'],
+            [
+                {
+                    price: {
+                        eur: 12,
+                        dol: 14,
+                    },
+                    size: 'big',
+                    stock: 10,
+                },
+                {
+                    price: {
+                        eur: 10,
+                        dol: 12,
+                    },
+                    size: 'medium',
+                    stock: 14,
+                },
+                {
+                    price: {
+                        eur: 8,
+                        dol: 10,
+                    },
+                    size: 'small',
+                    stock: 16,
+                }
+            ],
+            '2'
+        ),
+        new Product(
+            'Black rock',
+            'lorem ipsum patatim',
+            ['assets/blackrock.jpg'],
+            [
+                {
+                    price: {
+                        eur: 12,
+                        dol: 14,
+                    },
+                    size: 'big',
+                    stock: 10,
+                },
+                {
+                    price: {
+                        eur: 10,
+                        dol: 12,
+                    },
+                    size: 'medium',
+                    stock: 14,
+                },
+                {
+                    price: {
+                        eur: 8,
+                        dol: 10,
+                    },
+                    size: 'small',
+                    stock: 16,
+                }
+            ],
+            '3'
+        ),
     ];
 
     // this function renders the content from the object product to the index page, dynamicaly.
@@ -50,11 +114,6 @@ function Products() {
             var productImageEl = document.createElement('div');
             productImageEl.className = 'product-image';
             productImageEl.innerHTML = '<img src="' + product.img + '">';
-
-            // This function stores the id of the product on localStorage, when the user clicks on the product-image.
-            // productImageEl.onclick = function () {
-            //     localStorage.setItem('selected-product-id', product.id);
-            // };
 
             var productNameEl = document.createElement('h2');
             productNameEl.className = 'product-name';
