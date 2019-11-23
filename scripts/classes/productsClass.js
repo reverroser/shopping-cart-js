@@ -102,11 +102,21 @@ function Products() {
                 productSelectSizeEl.appendChild(option);
             }
 
+            // Save product to cart
+            var cart = new Cart();
+            var productAddToCartEl = document.createElement('button');
+            productAddToCartEl.className = 'product-add-cart-button';
+            productAddToCartEl.innerHTML = 'Add to cart';
+            productAddToCartEl.onclick = function () {
+                cart.addProduct(product);
+            };
+
             productEl.appendChild(productImageEl);
             productEl.appendChild(productNameEl);
             productEl.appendChild(productPriceEl);
             productEl.appendChild(productSelectSizeEl);
             productEl.appendChild(productSelectQuantityEl);
+            productEl.appendChild(productAddToCartEl);
             productsGridEl.appendChild(productEl);
         });
     };
