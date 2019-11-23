@@ -32,7 +32,7 @@ function Products() {
                         dol: 10,
                     },
                     size: 'small',
-                    stock: 10,
+                    stock: 16,
                 }
             ],
             '1'
@@ -61,33 +61,52 @@ function Products() {
             productNameEl.innerHTML = product.name;
 
             // This variable selects the first item in the properties array as default.
-            var defaultProps = product.properties[0];
+            var selectedProp = product.properties[0];
 
             var productPriceEl = document.createElement('h6');
             productPriceEl.className = 'product-price';
-            productPriceEl.innerHTML = `${defaultProps.price.eur}€`;
+            productPriceEl.innerHTML = `${selectedProp.price.eur}€`;
+
+            // This is the quantity selector
+            var productSelectQuantityEl = document.createElement('select');
+            productSelectQuantityEl.id = `${product.id}-quantity-select`;
+            for (var i = 0; i < selectedProp.stock; i++) {
+                var option = document.createElement('option');
+                option.value = i + 1;
+                option.text = i + 1;
+                productSelectQuantityEl.appendChild(option);
+            }
 
             // This is the size selector
-            var productSelectEl = document.createElement('select');
-            productSelectEl.id = `${product.id}-select`;
+            var productSelectSizeEl = document.createElement('select');
+            productSelectSizeEl.id = `${product.id}-size-select`;
             // Every time the size changes, the price is updated automatically.
-            productSelectEl.onchange = function () {
+            productSelectSizeEl.onchange = function () {
                 // Getting the property selected by its index.
-                var selectedProp = product.properties[productSelectEl.value];
+                selectedProp = product.properties[productSelectSizeEl.value];
                 productPriceEl.innerHTML = `${selectedProp.price.eur}€`;
+                // Set the new stock available
+                productSelectQuantityEl.options.length = 0;
+                for (var i = 0; i < selectedProp.stock; i++) {
+                    var option = document.createElement('option');
+                    option.value = i + 1;
+                    option.text = i + 1;
+                    productSelectQuantityEl.appendChild(option);
+                }
             };
             for (var i = 0; i < product.properties.length; i++) {
                 var option = document.createElement('option');
                 // Saving the index in the value to get the prop selected on the onchange event.
                 option.value = i;
                 option.text = product.properties[i].size;
-                productSelectEl.appendChild(option);
+                productSelectSizeEl.appendChild(option);
             }
 
             productEl.appendChild(productImageEl);
             productEl.appendChild(productNameEl);
             productEl.appendChild(productPriceEl);
-            productEl.appendChild(productSelectEl);
+            productEl.appendChild(productSelectSizeEl);
+            productEl.appendChild(productSelectQuantityEl);
             productsGridEl.appendChild(productEl);
         });
     };
