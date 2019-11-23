@@ -167,7 +167,10 @@ function Products() {
             productAddToCartEl.className = 'product-add-cart-button';
             productAddToCartEl.innerHTML = 'Add to cart';
             productAddToCartEl.onclick = function () {
-                cart.addProduct(product);
+                cart.addProduct(product.id, {
+                    size: productSelectSizeEl.value,
+                    quantity: productSelectQuantityEl.value,
+                });
                 // Set the new stock available
                 // TODO: get the available stock from localStorage
                 var availableStock = selectedProp.stock - productSelectQuantityEl.value;

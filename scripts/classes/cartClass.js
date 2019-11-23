@@ -3,10 +3,18 @@
  */
 function Cart() {
     this.products = JSON.parse(localStorage.getItem('cart')) || [];
-    this.addProduct = function (product) {
+    this.addProduct = function (productId, properties) {
         var cartCountEl = document.getElementById('cartCount');
-        // TODO: Add product selected props and save it in localStorage
-        this.products.push(product);
+        this.products.push({
+            id: productId,
+            properties,
+        });
+        localStorage.setItem('cart', JSON.stringify(this.products));
         cartCountEl.innerHTML = this.products.length;
+    }
+    this.getSelectedProductsById = function (id) {
+        return this.products.filter(function (product) {
+            return product.id === id;
+        });
     }
 }
