@@ -23,21 +23,10 @@
     font-size: 26px;
 }
 
-.header .navbar-toggler {
-    outline: none;
-}
-
-.header .navbar-toggler .toggler-icon {
-    width: 30px;
-    height: 2px;
-    background-color: #121212;
-    margin: 5px 0;
-    display: block;
-    position: relative;
-}
-
-.header .navbar-collapse .nav-item {
-    padding: 12px 0;
+.header .nav-item {
+    display: flex;
+    align-items: center;
+    margin-left: 18px;
 }
 
 .header-spacer {
