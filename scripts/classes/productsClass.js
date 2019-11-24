@@ -153,7 +153,7 @@ function Products() {
             productSelectSizeEl.onchange = function () {
                 // Getting the property selected by its index.
                 selectedProp = product.properties[productSelectSizeEl.value];
-                productPriceEl.innerHTML = `${selectedProp.price[currency]}${currencySymbol}`;
+                productPriceEl.innerHTML = `${selectedProp.price[currencyKey]}${currencySymbol}`;
                 // Set the new stock available
                 // The selectedStock maps the array to return the quantity in number format if the size
                 // is the same as the selected one, otherwise returns null. Then it filters out the null values.
