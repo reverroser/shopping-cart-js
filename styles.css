@@ -90,34 +90,9 @@
     text-align: center;
 }
 
-/*PRODUCT PAGE*/
-/*.product-detail-container {
-    margin-top: 26px;
-}
-.product-detail-container img{
-    margin-bottom: 30px;
-}
-.product-detail-container h6 {
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-size: 20px;
-    line-height: 24px;
-    color: #3c3a3a;
-    margin: 30px;
-    text-align: center;
-}
-
-/*#add-to-cart-button {
-    position: relative;
-    font-size: 15px;
-    color: #1a1a1a;
-    padding: 12px 24px;
-    border: 0;
-    text-align: center;
-    border-radius: 4px;
-    background-color: #de9797;
-    cursor: pointer;
-    text-decoration: none;
-    margin-bottom: 20px;
+/*CART*/
+.cart-products {
+    width: 100%;
 }
    
 /*FOOTER*/

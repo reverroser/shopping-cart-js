@@ -191,15 +191,15 @@ function Products() {
             productAddToCartEl.className = 'product-add-cart-button';
             productAddToCartEl.innerHTML = 'Add to cart';
             productAddToCartEl.onclick = function () {
-                cart.addProduct(product.id, {
+                cart.addProduct(product, {
                     size: productSelectSizeEl.value,
                     quantity: productSelectQuantityEl.value,
                 });
                 // Set the new stock available
                 // https://stackoverflow.com/questions/1230233/how-to-find-the-sum-of-an-array-of-numbers
                 var selectedStock = cart.getSelectedProductsById(product.id).map(function (product) {
-                    if (product.properties.size === productSelectSizeEl.value) {
-                        return parseInt(product.properties.quantity, 10);
+                    if (product.selectedProperties.size === productSelectSizeEl.value) {
+                        return parseInt(product.selectedProperties.quantity, 10);
                     }
                     return null;
                 }).filter(function (quantity) {
@@ -234,8 +234,8 @@ function Products() {
             // is the same as the selected one, otherwise returns null. Then it filters out the null values.
             // https://www.w3schools.com/jsref/jsref_map.asp
             var selectedStock = cart.getSelectedProductsById(product.id).map(function (product) {
-                if (product.properties.size === productSelectSizeEl.value) {
-                    return parseInt(product.properties.quantity, 10);
+                if (product.selectedProperties.size === productSelectSizeEl.value) {
+                    return parseInt(product.selectedProperties.quantity, 10);
                 }
                 return null;
             }).filter(function (quantity) {
