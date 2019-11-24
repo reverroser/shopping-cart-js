@@ -36,12 +36,15 @@ function Cart() {
         cartCountEl.innerHTML = products.length;
     }
     this.render = function () {
-        // This is needed to keep the value of this on the onclick function of the remove button
+        // This is needed to keep the value of this on the event handlers
         var scope = this;
         var products = scope.getProducts();
         var cartProductsEl = document.getElementById('cartProducts');
+        var currency = new Currency();
+        var currencyKey = currency.getCurrency();
+        var currencySymbol = currency.getCurrencySymbol();
         var totalPrice = 0;
-        // Reset the view
+        // Reset the content of the view
         cartProductsEl.innerHTML = '';
 
         products.forEach(function (product, index) {
@@ -50,36 +53,43 @@ function Cart() {
 
             var productQuantity = product.selectedProperties.quantity;
             var selectedProperty = product.properties[product.selectedProperties.size];
-            var productPrice = selectedProperty.price.eur * productQuantity;
+            var productPrice = selectedProperty.price[currencyKey] * productQuantity;
             totalPrice += productPrice;
 
-            productEl.innerHTML = `
-                <div>
-                    ${product.name}
-                    <div>
-                        Quantity ${productQuantity}
-                    </div>
-                </div>
-                <div>
-                    ${productPrice}€
-                    <button type="button" class="btn btn-danger btn-sm" id="remove-${product.id}">Remove</button>
-                </div>
-            `;
+            var productNameEl = document.createElement('div');
+            productNameEl.innerHTML = product.name;
+            var productQuantityEl = document.createElement('div');
+            productQuantityEl.innerHTML = `Quantity ${productQuantity}`;
+            productNameEl.appendChild(productQuantityEl);
 
-            cartProductsEl.appendChild(productEl);
-
-            var removeButtonEl = document.getElementById(`remove-${product.id}`);
+            var productPriceEl = document.createElement('div');
+            productPriceEl.innerHTML = `${productPrice}${currencySymbol}`;
+            var removeButtonEl = document.createElement('button');
+            removeButtonEl.type = 'button';
+            removeButtonEl.className = 'btn btn-danger btn-sm';
+            removeButtonEl.id = `remove-${product.id}`;
+            removeButtonEl.innerHTML = 'Remove';
             removeButtonEl.onclick = function () {
                 scope.removeProduct(index);
             };
+            productPriceEl.appendChild(removeButtonEl);
+
+            productEl.appendChild(productNameEl);
+            productEl.appendChild(productPriceEl);
+            cartProductsEl.appendChild(productEl);
         });
 
         var cartTotalPriceEl = document.createElement('li');
         cartTotalPriceEl.className = 'list-group-item d-flex justify-content-between align-items-center';
         cartTotalPriceEl.innerHTML = `
             <div>Total:</div>
-            <div>${totalPrice}€</div>
+            <div>${totalPrice}${currencySymbol}</div>
         `;
         cartProductsEl.appendChild(cartTotalPriceEl);
+
+        // Listens the updateCurrency custom event and refresh the view
+        document.addEventListener('updateCurrency', function () {
+            scope.render();
+        });
     }
 }

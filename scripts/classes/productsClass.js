@@ -106,6 +106,9 @@ function Products() {
     // this function renders the content from the object product to the index page, dynamicaly.
     this.render = function () {
         var productsGridEl = document.getElementById('productsGrid');
+        var currency = new Currency();
+        var currencyKey = currency.getCurrency();
+        var currencySymbol = currency.getCurrencySymbol();
 
         this.list.forEach(function (product) {
             var productEl = document.createElement('div');
@@ -122,10 +125,16 @@ function Products() {
             // This variable selects the first item in the properties array as default.
             var selectedProp = product.properties[0];
 
-            // TODO: change the currency dynamicly
             var productPriceEl = document.createElement('h6');
             productPriceEl.className = 'product-price';
-            productPriceEl.innerHTML = `${selectedProp.price.eur}€`;
+            productPriceEl.innerHTML = `${selectedProp.price[currencyKey]}${currencySymbol}`;
+
+            // Listens the updateCurrency custom event and update the price
+            document.addEventListener('updateCurrency', function () {
+                currencyKey = currency.getCurrency();
+                currencySymbol = currency.getCurrencySymbol();
+                productPriceEl.innerHTML = `${selectedProp.price[currencyKey]}${currencySymbol}`;
+            });
 
             // This is the quantity selector
             var productSelectQuantityEl = document.createElement('select');
@@ -144,7 +153,7 @@ function Products() {
             productSelectSizeEl.onchange = function () {
                 // Getting the property selected by its index.
                 selectedProp = product.properties[productSelectSizeEl.value];
-                productPriceEl.innerHTML = `${selectedProp.price.eur}€`;
+                productPriceEl.innerHTML = `${selectedProp.price[currency]}${currencySymbol}`;
                 // Set the new stock available
                 // The selectedStock maps the array to return the quantity in number format if the size
                 // is the same as the selected one, otherwise returns null. Then it filters out the null values.
