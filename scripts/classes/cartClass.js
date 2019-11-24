@@ -15,6 +15,7 @@ function Cart() {
     }
     this.removeProduct = function (position) {
         var products = this.getProducts();
+        // Filter out the products getting its position in the array
         var newProducts = products.filter(function (product, index) {
             return index !== position;
         });
