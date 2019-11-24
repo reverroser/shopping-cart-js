@@ -2,6 +2,7 @@
  * @class Cart
  */
 function Cart() {
+    // This is needed to get the up to date value from localStorage
     this.getProducts = function () {
         return JSON.parse(localStorage.getItem('cart')) || [];
     }
