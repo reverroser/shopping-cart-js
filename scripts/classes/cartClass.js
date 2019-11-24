@@ -2,28 +2,47 @@
  * @class Cart
  */
 function Cart() {
-    this.products = JSON.parse(localStorage.getItem('cart')) || [];
+    this.getProducts = function () {
+        return JSON.parse(localStorage.getItem('cart')) || [];
+    }
     this.addProduct = function (product, properties) {
+        var products = this.getProducts();
         product.selectedProperties = properties;
-        this.products.push(product);
-        localStorage.setItem('cart', JSON.stringify(this.products));
+        products.push(product);
+        localStorage.setItem('cart', JSON.stringify(products));
         this.updateBadge();
+    }
+    this.removeProduct = function (position) {
+        var products = this.getProducts();
+        var newProducts = products.filter(function (product, index) {
+            return index !== position;
+        });
+        localStorage.setItem('cart', JSON.stringify(newProducts));
+        this.updateBadge();
+        this.render();
     }
     // Filters the array by the given product id
     this.getSelectedProductsById = function (id) {
-        return this.products.filter(function (product) {
+        var products = this.getProducts();
+        return products.filter(function (product) {
             return product.id === id;
         });
     }
     this.updateBadge = function () {
+        var products = this.getProducts();
         var cartCountEl = document.getElementById('cartCount');
-        cartCountEl.innerHTML = this.products.length;
+        cartCountEl.innerHTML = products.length;
     }
     this.render = function () {
+        // This is needed to keep the value of this on the onclick function of the remove button
+        var scope = this;
+        var products = scope.getProducts();
         var cartProductsEl = document.getElementById('cartProducts');
         var totalPrice = 0;
+        // Reset the view
+        cartProductsEl.innerHTML = '';
 
-        this.products.forEach(function (product) {
+        products.forEach(function (product, index) {
             var productEl = document.createElement('li');
             productEl.className = 'list-group-item d-flex justify-content-between align-items-center';
 
@@ -39,10 +58,18 @@ function Cart() {
                         Quantity ${productQuantity}
                     </div>
                 </div>
-                <div>${productPrice}€</div>
+                <div>
+                    ${productPrice}€
+                    <button type="button" class="btn btn-danger btn-sm" id="remove-${product.id}">Remove</button>
+                </div>
             `;
 
             cartProductsEl.appendChild(productEl);
+
+            var removeButtonEl = document.getElementById(`remove-${product.id}`);
+            removeButtonEl.onclick = function () {
+                scope.removeProduct(index);
+            };
         });
 
         var cartTotalPriceEl = document.createElement('li');
