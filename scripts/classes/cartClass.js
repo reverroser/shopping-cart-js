@@ -11,6 +11,7 @@ function Cart() {
         localStorage.setItem('cart', JSON.stringify(this.products));
         this.updateBadge();
     }
+    // Filters the array by the given product id
     this.getSelectedProductsById = function (id) {
         return this.products.filter(function (product) {
             return product.id === id;

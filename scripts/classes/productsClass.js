@@ -122,6 +122,7 @@ function Products() {
             // This variable selects the first item in the properties array as default.
             var selectedProp = product.properties[0];
 
+            // TODO: change the currency dynamicly
             var productPriceEl = document.createElement('h6');
             productPriceEl.className = 'product-price';
             productPriceEl.innerHTML = `${selectedProp.price.eur}€`;
@@ -145,8 +146,31 @@ function Products() {
                 selectedProp = product.properties[productSelectSizeEl.value];
                 productPriceEl.innerHTML = `${selectedProp.price.eur}€`;
                 // Set the new stock available
+                // The selectedStock maps the array to return the quantity in number format if the size
+                // is the same as the selected one, otherwise returns null. Then it filters out the null values.
+                var selectedStock = cart.getSelectedProductsById(product.id).map(function (product) {
+                    if (product.properties.size === productSelectSizeEl.value) {
+                        return parseInt(product.properties.quantity, 10);
+                    }
+                    return null;
+                }).filter(function (quantity) {
+                    return quantity;
+                });
+                var availableStock = selectedProp.stock;
+                if (selectedStock.length) {
+                    // By the addition of all the quantities, it gets the selected stock.
+                    // https://stackoverflow.com/questions/1230233/how-to-find-the-sum-of-an-array-of-numbers
+                    selectedStock.reduce(function (a, b) {
+                        return a + b;
+                    }, 0);
+                    availableStock = selectedProp.stock - selectedStock;
+                }
+                // If the available stock is bigger than 0, the add to cart button and quantity select are enabled.
+                productAddToCartEl.disabled = availableStock === 0;
+                productSelectQuantityEl.disabled = availableStock === 0;
+
                 productSelectQuantityEl.options.length = 0;
-                for (var i = 0; i < selectedProp.stock; i++) {
+                for (var i = 0; i < availableStock; i++) {
                     var option = document.createElement('option');
                     option.value = i + 1;
                     option.text = i + 1;
@@ -172,8 +196,22 @@ function Products() {
                     quantity: productSelectQuantityEl.value,
                 });
                 // Set the new stock available
-                // TODO: get the available stock from localStorage
-                var availableStock = selectedProp.stock - productSelectQuantityEl.value;
+                // https://stackoverflow.com/questions/1230233/how-to-find-the-sum-of-an-array-of-numbers
+                var selectedStock = cart.getSelectedProductsById(product.id).map(function (product) {
+                    if (product.properties.size === productSelectSizeEl.value) {
+                        return parseInt(product.properties.quantity, 10);
+                    }
+                    return null;
+                }).filter(function (quantity) {
+                    return quantity;
+                }).reduce(function (a, b) {
+                    return a + b;
+                }, 0);
+                var availableStock = selectedProp.stock - selectedStock;
+                if (availableStock === 0) {
+                    productAddToCartEl.disabled = true;
+                    productSelectQuantityEl.disabled = true;
+                }
                 productSelectQuantityEl.options.length = 0;
                 for (var i = 0; i < availableStock; i++) {
                     var option = document.createElement('option');
@@ -190,6 +228,39 @@ function Products() {
             productEl.appendChild(productSelectQuantityEl);
             productEl.appendChild(productAddToCartEl);
             productsGridEl.appendChild(productEl);
+
+            // Init the available stock
+            // The selectedStock maps the array to return the quantity in number format if the size
+            // is the same as the selected one, otherwise returns null. Then it filters out the null values.
+            // https://www.w3schools.com/jsref/jsref_map.asp
+            var selectedStock = cart.getSelectedProductsById(product.id).map(function (product) {
+                if (product.properties.size === productSelectSizeEl.value) {
+                    return parseInt(product.properties.quantity, 10);
+                }
+                return null;
+            }).filter(function (quantity) {
+                return quantity;
+            });
+            var availableStock = selectedProp.stock;
+            if (selectedStock.length) {
+                // By the addition of all the quantities, it gets the selected stock.
+                // https://stackoverflow.com/questions/1230233/how-to-find-the-sum-of-an-array-of-numbers
+                selectedStock.reduce(function (a, b) {
+                    return a + b;
+                }, 0);
+                availableStock = selectedProp.stock - selectedStock;
+            }
+            // If the available stock is bigger than 0, the add to cart button and quantity select are enabled.
+            productAddToCartEl.disabled = availableStock === 0;
+            productSelectQuantityEl.disabled = availableStock === 0;
+
+            productSelectQuantityEl.options.length = 0;
+            for (var i = 0; i < availableStock; i++) {
+                var option = document.createElement('option');
+                option.value = i + 1;
+                option.text = i + 1;
+                productSelectQuantityEl.appendChild(option);
+            }
         });
     };
 }
